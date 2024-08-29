@@ -1,6 +1,6 @@
 Specifikacije za projekat
 
-“Evidencija projekata”
+“EVIDENCIJA PROJEKATA”
 
 
 Uvod
