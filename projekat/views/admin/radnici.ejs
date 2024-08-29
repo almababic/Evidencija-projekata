@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+      function odjava() {
+        window.location.href = "/";
+      }
+
+      function obrisiRadnika(id_radnik) {
+        if (confirm("Da li ste sigurni da želite da obrišete ovog radnika?")) {
+          fetch(`/admin/obrisi-radnik/${id_radnik}`, {
+            method: 'DELETE',
+          })
+                  .then(response => {
+                    if (response.ok) {
+                      window.location.reload();
+                    } else {
+                      console.error('Error u brisanju radnika');
+                    }
+                  })
+                  .catch(error => console.error('Error u brisanju radnika:', error));
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h1 style="margin-left: 5px; text-align: center">Meni</h1>
+      <br>
+      <ul>
+        <li><a href="/admin/admin-panel">admin</a></li>
+        <li><a href="/admin/poruke">Poruke</a></li>
+        <li><a href="/admin/menadzeri">Menadžeri projekata</a></li>
+        <li><a href="/admin/radnici">Radnici</a></li>
+        <li><a href="/admin/projekti">Projekti</a></li>
+        <li><a href="/admin/rang-lista">Rang lista</a></li>
+        <li><a href="/admin/statistika">Statistika</a></li>
+        <li><a href="/admin/ocjene">Ocjene korisnika</a></li>
+      </ul>
+      <br>
+      <div class="button-container">
+        <button onclick="odjava()">Odjava</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <h2>Lista Radnika</h2>
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Datum rođenja</th>
+          <th>Naziv kompanije</th>
+          <th>Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (let i = 0; i < radnici.length; i++) { %>
+          <tr>
+            <td><%= radnici[i].id_radnik %></td>
+            <td><%= radnici[i].ime_radnik %></td>
+            <td><%= radnici[i].prezime_radnik %></td>
+            <td><%= radnici[i].username_radnik %></td>
+            <td><%= radnici[i].email_radnik %></td>
+            <td><%= radnici[i].datumrodjenja_radnik.toLocaleDateString("en-GB") %></td>
+            <td><%= radnici[i].nazivkompanije_radnik %></td>
+            <td>
+              <button onclick="obrisiRadnika('<%= radnici[i].id_radnik %>')">Obriši</button>
+            </td>
+          </tr>
+        <% } %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/menadzer.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+      function odjava() {
+        window.location.href = "/";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h1 style="margin-left: 5px; text-align: center">Meni</h1>
+      <br>
+      <ul>
+        <li><a href="/menadzer/menadzer-profil/<%= menadzer.id_menadzer %>"> <%= menadzer.username_menadzer %> </a></li>
+        <li><a href="/menadzer/projekti/<%= menadzer.id_menadzer %>">Projekti</a></li>
+        <li><a href="/menadzer/poruke/<%= menadzer.id_menadzer %>">Poruke</a></li>
+        <li><a href="/menadzer/rang-lista/<%= menadzer.id_menadzer %>">Rang lista</a></li>
+        <li><a href="/menadzer/ocjene/<%= menadzer.id_menadzer %>">Ocijenite aplikaciju</a></li>
+      </ul>
+      <br>
+      <div class="button-container">
+        <button onclick="odjava()">Odjava</button>
+      </div>
+    </div>
+
+    <div class="content" style="display: flex; justify-content: center; align-items: center;">
+      <div class="form-box">
+        <form action="/menadzer/ocjene/<%= menadzer.id_menadzer %>" method="post" class="radnik-ocjene">
+          <!-- Skrivena polja za informacije o menadzeru -->
+          <input type="hidden" id="ime" name="ime_menadzer" value="<%= menadzer.ime_menadzer %>">
+          <input type="hidden" id="prezime" name="prezime_menadzer" value="<%= menadzer.prezime_menadzer %>">
+          <input type="hidden" id="username" name="username_menadzer" value="<%= menadzer.username_menadzer %>">
+
+          <label for="ocjena1">Kako ocjenjujete dizajn aplikacije?</label>
+          <div>
+            <input type="radio" id="ocjena1-1" name="ocjena1" value="1" required>
+            <label for="ocjena1-1">1</label>
+
+            <input type="radio" id="ocjena1-2" name="ocjena1" value="2">
+            <label for="ocjena1-2">2</label>
+
+            <input type="radio" id="ocjena1-3" name="ocjena1" value="3">
+            <label for="ocjena1-3">3</label>
+
+            <input type="radio" id="ocjena1-4" name="ocjena1" value="4">
+            <label for="ocjena1-4">4</label>
+
+            <input type="radio" id="ocjena1-5" name="ocjena1" value="5">
+            <label for="ocjena1-5">5</label>
+          </div>
+
+          <label for="ocjena2">Kako ocjenjujete funkcionalnost aplikacije?</label>
+          <div>
+            <input type="radio" id="ocjena2-1" name="ocjena2" value="1" required>
+            <label for="ocjena2-1">1</label>
+
+            <input type="radio" id="ocjena2-2" name="ocjena2" value="2">
+            <label for="ocjena2-2">2</label>
+
+            <input type="radio" id="ocjena2-3" name="ocjena2" value="3">
+            <label for="ocjena2-3">3</label>
+
+            <input type="radio" id="ocjena2-4" name="ocjena2" value="4">
+            <label for="ocjena2-4">4</label>
+
+            <input type="radio" id="ocjena2-5" name="ocjena2" value="5">
+            <label for="ocjena2-5">5</label>
+          </div>
+
+          <label for="ocjena3">Kako ocjenjujete sistem komunikacije?</label>
+          <div>
+            <input type="radio" id="ocjena3-1" name="ocjena3" value="1" required>
+            <label for="ocjena3-1">1</label>
+
+            <input type="radio" id="ocjena3-2" name="ocjena3" value="2">
+            <label for="ocjena3-2">2</label>
+
+            <input type="radio" id="ocjena3-3" name="ocjena3" value="3">
+            <label for="ocjena3-3">3</label>
+
+            <input type="radio" id="ocjena3-4" name="ocjena3" value="4">
+            <label for="ocjena3-4">4</label>
+
+            <input type="radio" id="ocjena3-5" name="ocjena3" value="5">
+            <label for="ocjena3-5">5</label>
+          </div>
+
+          <label for="ocjena4">Kako ocjenjujete brzinu aplikacije?</label>
+          <div>
+            <input type="radio" id="ocjena4-1" name="ocjena4" value="1" required>
+            <label for="ocjena4-1">1</label>
+
+            <input type="radio" id="ocjena4-2" name="ocjena4" value="2">
+            <label for="ocjena4-2">2</label>
+
+            <input type="radio" id="ocjena4-3" name="ocjena4" value="3">
+            <label for="ocjena4-3">3</label>
+
+            <input type="radio" id="ocjena4-4" name="ocjena4" value="4">
+            <label for="ocjena4-4">4</label>
+
+            <input type="radio" id="ocjena4-5" name="ocjena4" value="5">
+            <label for="ocjena4-5">5</label>
+          </div>
+
+          <label for="ocjena5">Kako ocjenjujete upravljanje projektima?</label>
+          <div>
+            <input type="radio" id="ocjena5-1" name="ocjena5" value="1" required>
+            <label for="ocjena5-1">1</label>
+
+            <input type="radio" id="ocjena5-2" name="ocjena5" value="2">
+            <label for="ocjena5-2">2</label>
+
+            <input type="radio" id="ocjena5-3" name="ocjena5" value="3">
+            <label for="ocjena5-3">3</label>
+
+            <input type="radio" id="ocjena5-4" name="ocjena5" value="4">
+            <label for="ocjena5-4">4</label>
+
+            <input type="radio" id="ocjena5-5" name="ocjena5" value="5">
+            <label for="ocjena5-5">5</label>
+          </div>
+
+          <label for="komentar">Dodatni komentari i sugestije:</label><br>
+          <textarea id="komentar" name="komentar" rows="10" cols="30"></textarea>
+          <br><br>
+          <button type="submit" style="float: right">Potvrdi Ocjenjivanje</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+      function odjava() {
+        window.location.href = "/";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h1 style="margin-left: 5px; text-align: center">Meni</h1>
+      <br>
+      <ul>
+        <li><a href="/admin/admin-panel">admin</a></li>
+        <li><a href="/admin/poruke">Poruke</a></li>
+        <li><a href="/admin/menadzeri">Menadžeri projekata</a></li>
+        <li><a href="/admin/radnici">Radnici</a></li>
+        <li><a href="/admin/projekti">Projekti</a></li>
+        <li><a href="/admin/rang-lista">Rang lista</a></li>
+        <li><a href="/admin/statistika">Statistika</a></li>
+        <li><a href="/admin/ocjene">Ocjene korisnika</a></li>
+      </ul>
+      <br>
+      <div class="button-container">
+        <button onclick="odjava()">Odjava</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <h2>Projekti</h2>
+      <% if (projekti.length > 0) { %>
+        <ul>
+          <% projekti.forEach(projekat => { %>
+            <li>
+              <h3><%= projekat.naziv %></h3>
+              <p><%= projekat.opis %></p>
+              <p>Startni datum: <%= projekat.startni_datum.toLocaleDateString("en-GB") %></p>
+              <p>Završni datum: <%= projekat.zavrsni_datum.toLocaleDateString("en-GB") %></p>
+              <p>Menadžer: <%= projekat.username_menadzer %></p>
+              <p>Taskovi:</p>
+              <ul>
+                <% let projectNotFinished = false; %>
+                <% projekat.taskovi.forEach(task => { %>
+                  <li>
+                    <p>Naziv taska: <%= task.naziv %></p>
+                    <p>Radnik: <%= task.username_radnik %></p>
+                    <% if (task.utroseno_vrijeme) { %>
+                      <p>Utrošeno vrijeme: <%= task.utroseno_vrijeme %> sati</p>
+                    <% } else { %>
+                      <p>Utrošeno vrijeme: Nije uneseno</p>
+                    <% } %>
+                    <% if (!task.utroseno_vrijeme) { %>
+                      <% projectNotFinished = true; %>
+                    <% } %>
+                  </li>
+                <% }); %>
+              </ul>
+              <% if (projectNotFinished) { %>
+                <p>Status projekta: <span style="color: red; font-weight: bold;">Projekat nije završen!</span></p>
+              <% } else { %>
+                <p>Status projekta: <span style="color: green; font-weight: bold;">Projekat je završen!</span></p>
+              <% } %>
+            </li>
+          <% }); %>
+        </ul>
+      <% } else { %>
+        <p>Nema projekata!</p>
+      <% } %>
+    </div>
+  </body>
+</html>

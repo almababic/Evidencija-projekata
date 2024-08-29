@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/radnik.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+      function odjava() {
+        window.location.href = "/";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h1 style="margin-left: 5px; text-align: center">Meni</h1>
+      <br>
+      <ul>
+        <li><a href="/radnik/radnik-profil/<%= radnik.id_radnik %>"> <%= radnik.username_radnik %> </a></li>
+        <li><a href="/radnik/projekti/<%= radnik.id_radnik %>">Projekti</a></li>
+        <li><a href="/radnik/poruke/<%= radnik.id_radnik %>">Poruke</a></li>
+        <li><a href="/radnik/rang-lista/<%= radnik.id_radnik %>">Rang lista</a></li>
+        <li><a href="/radnik/ocjene/<%= radnik.id_radnik %>">Ocijenite aplikaciju</a></li>
+      </ul>
+      <br>
+      <div class="button-container">
+        <button onclick="odjava()">Odjava</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <h2>Projekti</h2>
+      <% projekti.forEach(projekat => { %>
+        <div class="project-box">
+          <h3>Naziv projekta: <%= projekat.naziv_projekta %></h3>
+          <p>Opis projekta: <%= projekat.opis_projekta %></p>
+          <p>Startni datum: <%= projekat.startni_datum %></p>
+          <p>Završni datum: <%= projekat.zavrsni_datum %></p>
+          <h3>Taskovi:</h3>
+          <ul style="list-style-type: none">
+            <% if (projekat.taskovi && projekat.taskovi.length > 0) { %>
+              <% projekat.taskovi.forEach(task => { %>
+                <li class="task">
+                  <h4 style="text-align: left"><%= task.task_naziv %></h4>
+                  <% console.info("task:", task); %>
+                  <% console.info("task.utroseno_vrijeme:", task.utroseno_vrijeme); %>
+                  <% if (task.utroseno_vrijeme === null || task.utroseno_vrijeme === undefined) { %>
+                    <form action="/radnik/unos-radnih-sati/<%= radnik.id_radnik %>/<%= projekat.id_projekta %>/<%= task.id_taska %>" method="post">
+                      <input type="number" name="utroseno_vrijeme" placeholder="Utrošeno vrijeme (u satima)" required>
+                      <button type="submit">Unesi radne sate</button>
+                    </form>
+                  <% } else { %>
+                    <p>Već uneseno vrijeme: <%= task.utroseno_vrijeme %>h</p>
+                  <% } %>
+                </li>
+              <% }) %>
+            <% } else { %>
+              <p>Nema dostupnih taskova.</p>
+            <% } %>
+          </ul>
+        </div>
+      <% }) %>
+    </div>
+  </body>
+</html>

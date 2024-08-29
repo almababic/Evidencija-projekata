@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/register.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+    <script>
+      // Skripta za prikazivanje alerta ako postoji greška
+      const errorMessage = '<%= typeof error !== "undefined" ? error : "" %>'; // Dohvaća poruku o grešci iz servera
+
+      if (errorMessage) {
+        alert(errorMessage);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="register-container">
+      <div class="menadzer">
+        <form class="menadzer-register-form" action="/register/registerMenadzer" method="post">
+          <h3>Registrujte se kao menadžer projekta</h3>
+          <label for="ime">Ime:</label>
+          <input type="text" id="ime" name="ime_menadzer" required>
+
+          <label for="prezime">Prezime:</label>
+          <input type="text" id="prezime" name="prezime_menadzer" required>
+
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username_menadzer" required>
+
+          <label for="lozinka">Lozinka:</label>
+          <input type="password" id="lozinka" name="lozinka_menadzer" required>
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email_menadzer" required>
+
+          <label for="datumRodjenja">Datum rođenja:</label>
+          <input type="date" id="datumRodjenja" name="datumrodjenja_menadzer" required>
+
+          <label for="nazivKompanije">Naziv kompanije:</label>
+          <input type="text" id="nazivKompanije" name="nazivkompanije_menadzer" required>
+
+          <button type="submit">Registracija</button>
+        </form>
+        <div id="errorMessage"></div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      function odjava() {
+        window.location.href = "/";
+      }
+
+      function openModal(komentar) {
+        var modal = document.getElementById("myModal");
+        var komentarModal = document.getElementById("komentarModal");
+
+        // Postavite sadržaj komentara u modal prozoru
+        komentarModal.innerHTML = komentar;
+
+        // Prikazivanje moda
+        modal.style.display = "block";
+      }
+
+      function closeModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h1 style="margin-left: 5px; text-align: center">Meni</h1>
+      <br>
+      <ul>
+        <li><a href="/admin/admin-panel">admin</a></li>
+        <li><a href="/admin/poruke">Poruke</a></li>
+        <li><a href="/admin/menadzeri">Menadžeri projekata</a></li>
+        <li><a href="/admin/radnici">Radnici</a></li>
+        <li><a href="/admin/projekti">Projekti</a></li>
+        <li><a href="/admin/rang-lista">Rang lista</a></li>
+        <li><a href="/admin/statistika">Statistika</a></li>
+        <li><a href="/admin/ocjene">Ocjene korisnika</a></li>
+      </ul>
+      <br>
+      <div class="button-container">
+        <button onclick="odjava()">Odjava</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <h2>Ocjene korisnika</h2>
+      <table>
+        <thead>
+        <tr>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>Username</th>
+          <th>Dizajn</th>
+          <th>Funkcionalnost</th>
+          <th>Komunikacija</th>
+          <th>Brzina</th>
+          <th>Projekat</th>
+          <th>Komentar</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <% for (let i = 0; i < ocjene.length; i++) { %>
+          <tr>
+            <td><%= ocjene[i].ime %></td>
+            <td><%= ocjene[i].prezime %></td>
+            <td><%= ocjene[i].username %></td>
+            <td style="font-size: 12px">
+              <% for (let j = 1; j <= 5; j++) { %>
+                <% if (j <= ocjene[i].dizajn) { %>
+                  <i class="fas fa-star"></i>
+                <% } else { %>
+                  <i class="far fa-star"></i>
+                <% } %>
+              <% } %>
+            </td>
+            <td style="font-size: 12px">
+              <% for (let j = 1; j <= 5; j++) { %>
+                <% if (j <= ocjene[i].funkcionalnost) { %>
+                  <i class="fas fa-star"></i>
+                <% } else { %>
+                  <i class="far fa-star"></i>
+                <% } %>
+              <% } %>
+            </td>
+            <td style="font-size: 12px">
+              <% for (let j = 1; j <= 5; j++) { %>
+                <% if (j <= ocjene[i].komunikacija) { %>
+                  <i class="fas fa-star"></i>
+                <% } else { %>
+                  <i class="far fa-star"></i>
+                <% } %>
+              <% } %>
+            </td>
+            <td style="font-size: 12px">
+              <% for (let j = 1; j <= 5; j++) { %>
+                <% if (j <= ocjene[i].brzina) { %>
+                  <i class="fas fa-star"></i>
+                <% } else { %>
+                  <i class="far fa-star"></i>
+                <% } %>
+              <% } %>
+            </td>
+            <td style="font-size: 12px">
+              <% for (let j = 1; j <= 5; j++) { %>
+                <% if (j <= ocjene[i].projekat) { %>
+                  <i class="fas fa-star"></i>
+                <% } else { %>
+                  <i class="far fa-star"></i>
+                <% } %>
+              <% } %>
+            </td>
+            <td style="font-size: 12px">
+              <span onclick="openModal('<%= ocjene[i].komentar %>')" style="cursor: pointer">Prikaži komentar</span>
+            </td>
+          </tr>
+        <% } %>
+        </tbody>
+      </table>
+    </div>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="komentarModal"></p>
+      </div>
+    </div>
+  </body>
+</html>

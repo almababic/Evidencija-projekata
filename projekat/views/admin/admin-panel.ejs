@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+      function odjava() {
+        window.location.href = "/";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h1 style="margin-left: 5px; text-align: center">Meni</h1>
+      <br>
+      <ul>
+        <li><a href="/admin/admin-panel">admin</a></li>
+        <li><a href="/admin/poruke">Poruke</a></li>
+        <li><a href="/admin/menadzeri">Menadžeri projekata</a></li>
+        <li><a href="/admin/radnici">Radnici</a></li>
+        <li><a href="/admin/projekti">Projekti</a></li>
+        <li><a href="/admin/rang-lista">Rang lista</a></li>
+        <li><a href="/admin/statistika">Statistika</a></li>
+        <li><a href="/admin/ocjene">Ocjene korisnika</a></li>
+      </ul>
+      <br>
+      <div class="button-container">
+        <button onclick="odjava()">Odjava</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>Dobrodošli na Administratorski Panel!</h1>
+      <br>
+      <h3>Administrator sistema</h3>
+      <ul>
+        <li>Administratori su osnovna kontrolna tačka u sistemu.</li>
+        <li>Prate sve aktivnosti u sistemu putem administratorskog panela.</li>
+        <li>Imaju uvid u sve radnike i menadžere unutar aplikacije, kao i u njihove projekte, odnosno taskove.</li>
+        <li>Imaju uvid u ocjene korisnika, kao i u statistiku aplikacije.</li>
+        <li>Također, imaju pregled rang listi menadžera i radnika rangiranih po broju završenih projekata, odnosno taskova.</li>
+        <li>Imaju mogućnost brisanja korisničkih računa. </li>
+      </ul>
+      <br>
+      <p><i class="fas fa-arrow-left"></i> Odaberite stavku iz menija.</p>
+    </div>
+  </body>
+</html>

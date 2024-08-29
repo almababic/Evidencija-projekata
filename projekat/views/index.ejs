@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  </head>
+  <body>
+    <div class="container">
+      <div class="content-container">
+        <div class="project-title">Evidencija projekata</div>
+        <div class="opis-aplikacije">
+          <p class="opis">Ova aplikacija je dizajnirana kako bi olakšala upravljanje projektima i praćenje radnih aktivnosti unutar Vaše kompanije. Bez obzira da li ste menadžer projekta ili radnik,
+            Evidencija projekata pruža Vam snažan alat za efikasno vođenje evidencije radnih sati, praćenje napretka projekata i uspostavljanje komunikacije.</p>
+        </div>
+        <div class="login-register">
+          <p class="opis2">Prijavite se ili se registrujte kako biste počeli efikasno upravljati svojim projektima i taskovima!</p>
+          <form action="/login">
+            <button>Prijava</button>
+          </form>
+          <form action="/register">
+            <button>Registracija</button>
+          </form>
+        </div>
+        <div class="admin-login">
+          <a href="/admin-login">Prijava kao admin</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

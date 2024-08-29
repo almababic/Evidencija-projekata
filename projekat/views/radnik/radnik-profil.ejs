@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/radnik.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+      function odjava() {
+        window.location.href = "/";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h1 style="margin-left: 5px; text-align: center">Meni</h1>
+      <br>
+      <ul>
+        <li><a href="/radnik/radnik-profil/<%= radnik.id_radnik %>"> <%= radnik.username_radnik %> </a></li>
+        <li><a href="/radnik/projekti/<%= radnik.id_radnik %>">Projekti</a></li>
+        <li><a href="/radnik/poruke/<%= radnik.id_radnik %>">Poruke</a></li>
+        <li><a href="/radnik/rang-lista/<%= radnik.id_radnik %>">Rang lista</a></li>
+        <li><a href="/radnik/ocjene/<%= radnik.id_radnik %>">Ocijenite aplikaciju</a></li>
+      </ul>
+      <br>
+      <div class="button-container">
+        <button onclick="odjava()">Odjava</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>Dobrodošli <%= radnik.ime_radnik %>  <%= radnik.prezime_radnik %>!</h1>
+      <br>
+      <p><i class="fas fa-user"></i> Username: <%= radnik.username_radnik %></p>
+      <p><i class="fas fa-envelope"></i> Email: <%= radnik.email_radnik %></p>
+      <p><i class="fas fa-calendar"></i> Datum rođenja: <%= radnik.datumrodjenja_radnik.toLocaleDateString("en-GB") %></p>
+      <p><i class="fas fa-building"></i> Naziv kompanije: <%= radnik.nazivkompanije_radnik %></p>
+      <br>
+      <p><i class="fas fa-arrow-left"></i> Odaberite stavku iz menija.</p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('/images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: cursive;
+    height: 110vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    text-align: center;
+}
+
+.container {
+    position: absolute;
+    width: 40%;
+    height: 50%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(128, 128, 128, 0.9);
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.account-type-label {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.account-type-radio {
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+}
+
+.register-container {
+    position: absolute;
+    width: 35%;
+    height: 90%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(128, 128, 128, 0.9);
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin-top: -60px;
+}
+
+.account-type-label {
+    margin-bottom: 5px;
+    font-size: 1px;
+
+}
+
+.menadzer-register-form {
+    text-align: center;
+}
+
+.menadzer-register-form {
+    display: block;
+    text-align: left;
+}
+
+.menadzer-register-form input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.menadzer-register-form button {
+    width: 20%;
+    height: 100%;
+    padding: 7px 10px;
+    background-color: #4CAF50;
+    font-size: 13px;
+    font-family: cursive;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    float: right;
+}
+
+.menadzer-register-form button:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    body {
+        height: auto;
+        overflow: hidden;
+    }
+
+    .register-container {
+        width: 95%;
+        align-items: stretch;
+        position: static;
+        top: auto;
+        left: auto;
+        right: auto;
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 40px;
+        margin-bottom: 50px;
+    }
+}

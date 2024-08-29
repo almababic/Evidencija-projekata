@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+    <script>
+      function redirectToRegister(tip) {
+        if (tip === 'menadzer') {
+          window.location.href = '/register/registerMenadzer';
+        } else if (tip === 'radnik') {
+          window.location.href = '/register/registerRadnik';
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Odaberite tip računa:</h2>
+      <div>
+        <label class="account-type-label">
+          <input type="radio" name="tip" value="menadzer" class="account-type-radio" onclick="redirectToRegister('menadzer')">
+          Menadžer
+        </label>
+        <label class="account-type-label">
+          <input type="radio" name="tip" value="radnik" class="account-type-radio" onclick="redirectToRegister('radnik')">
+          Radnik
+        </label>
+      </div>
+    </div>
+  </body>
+</html>

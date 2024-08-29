@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      function odjava() {
+        window.location.href = "/";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h1 style="margin-left: 5px; text-align: center">Meni</h1>
+      <br>
+      <ul>
+        <li><a href="/admin/admin-panel">admin</a></li>
+        <li><a href="/admin/poruke">Poruke</a></li>
+        <li><a href="/admin/menadzeri">Menadžeri projekata</a></li>
+        <li><a href="/admin/radnici">Radnici</a></li>
+        <li><a href="/admin/projekti">Projekti</a></li>
+        <li><a href="/admin/rang-lista">Rang lista</a></li>
+        <li><a href="/admin/statistika">Statistika</a></li>
+        <li><a href="/admin/ocjene">Ocjene korisnika</a></li>
+      </ul>
+      <br>
+      <div class="button-container">
+        <button onclick="odjava()">Odjava</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <h2>Statistika</h2>
+      <!-- Pie chart za broj radnika i menadžera -->
+      <div class="chart-container">
+        <h3>Broj radnika i menadžera:</h3>
+        <canvas id="radniciChart"></canvas>
+      </div>
+
+      <!-- Pie chart za broj kompanija -->
+      <div class="chart-container">
+        <h3>Broj zaposlenih po kompanijama:</h3>
+        <canvas id="firmsChart"></canvas>
+      </div>
+
+      <script>
+        // Podaci za pie chart radnika i menadžera
+        var radniciData = {
+          labels: ['Radnici', 'Menadžeri'],
+          datasets: [{
+            data: [<%= radniciCount %>, <%= menadzeriCount %>],
+            backgroundColor: ['#FF6384', '#36A2EB'],
+            hoverBackgroundColor: ['#FF6384', '#36A2EB']
+          }]
+        };
+
+        // Opcije za pie chart radnika i menadžera
+        var radniciOptions = {
+          responsive: true
+        };
+
+        // Kreiranje pie charta radnika i menadžera
+        var radniciChart = new Chart(document.getElementById('radniciChart'), {
+          type: 'pie',
+          data: radniciData,
+          options: radniciOptions
+        });
+
+        // Random boje za pie chart kompanija
+        var randomColors = generateRandomColors(<%= firmsData.length %>);
+
+        // Podaci za pie chart kompanija
+        var firmsData = {
+          labels: [<% firmsData.forEach(firma => { %>'<%= firma.firma %>', <% }) %>],
+          datasets: [{
+            data: [<% firmsData.forEach(firma => { %><%= firma.count %>, <% }) %>],
+            backgroundColor: randomColors,
+            hoverBackgroundColor: randomColors
+          }]
+        };
+
+        // Opcije za pie chart kompanija
+        var firmsOptions = {
+          responsive: true,
+          legend: {
+            position: 'right'
+          }
+        };
+
+        // Kreiranje pie charta kompanija
+        var firmsChart = new Chart(document.getElementById('firmsChart'), {
+          type: 'pie',
+          data: firmsData,
+          options: firmsOptions
+        });
+
+        // Funkcija za generisanje random boja
+        function generateRandomColors(count) {
+          var colors = [];
+          for (var i = 0; i < count; i++) {
+            var color = '#' + Math.floor(Math.random()*16777215).toString(16); // Generiši HEX boju
+            colors.push(color);
+          }
+          return colors;
+        }
+      </script>
+
+      <br>
+      <div class="ukupan-broj-korisnika" style="display: inline-block; margin-right: 220px;">
+        <h3 style="display: inline-block; margin-right: 10px;">Ukupan broj korisnika:</h3>
+        <p style="display: inline-block;"><%= totalUsers %></p>
+      </div>
+
+      <div class="ukupan-broj-kompanija" style="display: inline-block;">
+        <h3 style="display: inline-block; margin-right: 10px;">Ukupan broj kompanija:</h3>
+        <p style="display: inline-block;"><%= totalFirms %></p>
+      </div>
+      <br><br>
+
+      <div class="chart-container">
+        <h3>Broj završenih i nezavršenih projekata:</h3>
+        <canvas id="finishedProjectsChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <h3>Broj završenih i nezavršenih taskova:</h3>
+        <canvas id="finishedTasksChart"></canvas>
+      </div>
+
+      <script>
+        var finishedProjectsData = {
+          labels: ['Završeni Projekti', 'Nezavršeni Projekti'],
+          datasets: [{
+            data: [<%= finishedProjectsCount %>, <%= unfinishedProjectsCount %>],
+            backgroundColor: ['#4CAF50', '#FF0000'],
+            hoverBackgroundColor: ['#45A049', '#FF6347']
+          }]
+        };
+
+        // Opcije za pie chart završenih i nezavršenih projekata
+        var finishedProjectsOptions = {
+          responsive: true
+        };
+
+        // Kreiranje pie charta završenih i nezavršenih projekata
+        var finishedProjectsChart = new Chart(document.getElementById('finishedProjectsChart'), {
+          type: 'pie',
+          data: finishedProjectsData,
+          options: finishedProjectsOptions
+        });
+
+        var finishedTasksData = {
+          labels: ['Završeni Taskovi', 'Nezavršeni Taskovi'],
+          datasets: [{
+            data: [<%= completedTasksCount %>, <%= unfinishedTasksCount %>],
+            backgroundColor: ['#800080', '#808080'],
+            hoverBackgroundColor: ['#9932cc', '#a9a9a9']
+          }]
+        };
+
+        // Opcije za pie chart završenih i nezavršenih taskova
+        var finishedTasksOptions = {
+          responsive: true
+        };
+
+        // Kreiranje pie charta završenih i nezavršenih taskova
+        var finishedTasksChart = new Chart(document.getElementById('finishedTasksChart'), {
+          type: 'pie',
+          data: finishedTasksData,
+          options: finishedTasksOptions
+        });
+      </script>
+
+      <br>
+      <div class="ukupan-broj-projekata" style="display: inline-block; margin-right: 220px;">
+        <h3 style="display: inline-block; margin-right: 10px;">Ukupan broj projekata:</h3>
+        <p style="display: inline-block;"><%= totalProjectsCount %></p>
+      </div>
+
+      <div class="ukupan-broj-taskova" style="display: inline-block;">
+        <h3 style="display: inline-block; margin-right: 10px;">Ukupan broj taskova:</h3>
+        <p style="display: inline-block;"><%= totalTasksCount %></p>
+      </div>
+      <br><br>
+
+      <div class="average-ratings">
+        <h3>Prosječne ocjene korisnika:</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Kategorija</th>
+            <th>Prosječna ocjena</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Dizajn</td>
+            <td><%= averageDizajn.toFixed(2) %></td>
+          </tr>
+          <tr>
+            <td>Funkcionalnost</td>
+            <td><%= averageFunkcionalnost.toFixed(2) %></td>
+          </tr>
+          <tr>
+            <td>Komunikacija</td>
+            <td><%= averageKomunikacija.toFixed(2) %></td>
+          </tr>
+          <tr>
+            <td>Brzina</td>
+            <td><%= averageBrzina.toFixed(2) %></td>
+          </tr>
+          <tr>
+            <td>Projekat</td>
+            <td><%= averageProjekat.toFixed(2) %></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+      function odjava() {
+        window.location.href = "/";
+      }
+    </script>
+
+  </head>
+  <body>
+    <div class="sidebar">
+      <h1 style="margin-left: 5px; text-align: center">Meni</h1>
+      <br>
+      <ul>
+        <li><a href="/radnik/radnik-profil/<%= radnik.id_radnik %>"> <%= radnik.username_radnik %> </a></li>
+        <li><a href="/radnik/projekti/<%= radnik.id_radnik %>">Projekti</a></li>
+        <li><a href="/radnik/poruke/<%= radnik.id_radnik %>">Poruke</a></li>
+        <li><a href="/radnik/rang-lista/<%= radnik.id_radnik %>">Rang lista</a></li>
+        <li><a href="/radnik/ocjene/<%= radnik.id_radnik %>">Ocijenite aplikaciju</a></li>
+      </ul>
+      <br>
+      <div class="button-container">
+        <button onclick="odjava()">Odjava</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>Rang lista</h1>
+      <br>
+
+      <h2>Menadžeri - Završeni projekti</h2>
+      <table>
+        <tr>
+          <th>#</th>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>Username</th>
+          <th>Broj završenih projekata</th>
+        </tr>
+        <% for (const menadzer of menadzeri) { %>
+          <tr>
+            <td><%= menadzer.rank %></td>
+            <td><%= menadzer.ime_menadzer %></td>
+            <td><%= menadzer.prezime_menadzer %></td>
+            <td><%= menadzer.username_menadzer %></td>
+            <td><%= menadzer.zavrseni_projekti %></td>
+          </tr>
+        <% } %>
+      </table>
+
+      <h2>Radnici - Završeni taskovi</h2>
+      <table>
+        <tr>
+          <th>#</th>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>Username</th>
+          <th>Broj završenih taskova</th>
+        </tr>
+        <% for (const radnik of radnici) { %>
+          <tr style="<%= radnik.username_radnik === trenutniRadnikUsername ? 'font-weight: bold; background-color: #3FCCCC' : '' %>">
+            <td><%= radnik.rank %></td>
+            <td><%= radnik.ime_radnik %></td>
+            <td><%= radnik.prezime_radnik %></td>
+            <td><%= radnik.username_radnik %></td>
+            <td><%= radnik.zavrseni_taskovi %></td>
+          </tr>
+        <% } %>
+      </table>
+    </div>
+  </body>
+</html>

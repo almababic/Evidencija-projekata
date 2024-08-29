@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/menadzer.css' />
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <script>
+    function odjava() {
+      window.location.href = "/";
+    }
+
+    function updateTaskFields() {
+      var brojTaskova = document.getElementById('brojTaskova').value;
+      var taskFieldsContainer = document.getElementById('taskFieldsContainer');
+
+      // Clear previous task fields
+      taskFieldsContainer.innerHTML = '';
+
+      for (let i = 0; i < brojTaskova; i++) {
+        var taskFieldDiv = document.createElement('div');
+
+        var labelNaziv = document.createElement('label');
+        labelNaziv.innerHTML = 'Naziv taska:';
+        var inputNaziv = document.createElement('input');
+        inputNaziv.type = 'text';
+        inputNaziv.name = 'taskovi[' + i + '][naziv]';
+        inputNaziv.required = true;
+
+        var labelRadnik = document.createElement('label');
+        labelRadnik.innerHTML = 'Izaberi radnika:';
+        var selectRadnik = document.createElement('select');
+        selectRadnik.name = 'taskovi[' + i + '][id_radnik]';
+        selectRadnik.required = true;
+
+        // dropdown sa username radnici
+        <% radnici.forEach(radnik => { %>
+        var optionRadnik = document.createElement('option');
+        optionRadnik.value = '<%= radnik.id_radnik %>';
+        optionRadnik.innerHTML = '<%= radnik.username_radnik %>';
+        selectRadnik.appendChild(optionRadnik);
+        <% }); %>
+
+        taskFieldDiv.appendChild(labelNaziv);
+        taskFieldDiv.appendChild(inputNaziv);
+        taskFieldDiv.appendChild(labelRadnik);
+        taskFieldDiv.appendChild(selectRadnik);
+
+        taskFieldsContainer.appendChild(taskFieldDiv);
+      }
+    }
+  </script>
+</head>
+  <body>
+    <div class="sidebar">
+      <h1 style="margin-left: 5px; text-align: center">Meni</h1>
+      <br>
+      <ul>
+        <li><a href="/menadzer/menadzer-profil/<%= menadzer.id_menadzer %>"> <%= menadzer.username_menadzer %> </a></li>
+        <li><a href="/menadzer/projekti/<%= menadzer.id_menadzer %>">Projekti</a></li>
+        <li><a href="/menadzer/poruke/<%= menadzer.id_menadzer %>">Poruke</a></li>
+        <li><a href="/menadzer/rang-lista/<%= menadzer.id_menadzer %>">Rang lista</a></li>
+        <li><a href="/menadzer/ocjene/<%= menadzer.id_menadzer %>">Ocijenite aplikaciju</a></li>
+      </ul>
+      <br>
+      <div class="button-container">
+        <button onclick="odjava()">Odjava</button>
+      </div>
+    </div>
+
+    <div class="content" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+      <div class="project-list">
+        <h2>Lista Projekata:</h2>
+        <% if (projekti.length > 0) { %>
+          <ul>
+            <% projekti.forEach(projekat => { %>
+              <li>
+                <h3><%= projekat.naziv %></h3>
+                <p><%= projekat.opis %></p>
+                <p>Startni datum: <%= projekat.startni_datum.toLocaleDateString("en-GB") %></p>
+                <p>Završni datum: <%= projekat.zavrsni_datum.toLocaleDateString("en-GB") %></p>
+                <p>Taskovi:</p>
+                <ul>
+                  <% var projectNotFinished = function() { return false; }; %>
+                  <% projekat.taskovi.forEach(task => { %>
+                    <li>
+                      <p>Naziv taska: <%= task.naziv %></p>
+                      <p>Radnik: <%= task.username_radnik %></p>
+                      <% if (task.utroseno_vrijeme) { %>
+                        <p>Utrošeno vrijeme: <%= task.utroseno_vrijeme %> sati</p>
+                      <% } else { %>
+                        <p>Utrošeno vrijeme: Nije uneseno</p>
+                        <% projectNotFinished = function() { return true; }; %>
+                      <% } %>
+                    </li>
+                  <% }); %>
+                </ul>
+                <% if (projectNotFinished()) { %>
+                  <p>Status projekta: <span style="color: red; font-weight: bold;">Projekat nije završen!</span></p>
+                <% } else { %>
+                  <p>Status projekta: <span style="color: green; font-weight: bold;">Projekat je završen!</span></p>
+                <% } %>
+              </li>
+            <% }); %>
+          </ul>
+        <% } else { %>
+          <p>Nemate projekata!</p>
+        <% } %>
+      </div>
+
+      <div class="form-box" style="width: 400px">
+        <form action="/menadzer/projekti/<%= id_menadzer %>" method="post" class="novi-projekat-forma">
+          <h2 style="text-align: left">Novi Projekat:</h2>
+
+          <label for="naziv">Naziv projekta:</label>
+          <input type="text" name="naziv" required>
+
+          <label for="opis">Opis projekta:</label>
+          <textarea name="opis" required cols="30" rows="10"></textarea>
+
+          <label for="startniDatum">Startni datum:</label>
+          <input type="date" name="startni_datum" required>
+
+          <label for="zavrsniDatum">Završni datum:</label>
+          <input type="date" name="zavrsni_datum" required>
+
+          <label for="brojTaskova">Broj taskova:</label>
+          <input type="number" id="brojTaskova" name="brojTaskova" min="1" required oninput="updateTaskFields()">
+
+          <!-- dinamicki generise polja za unos taskova zavisno od broja taskova -->
+          <div id="taskFieldsContainer"></div>
+
+          <button type="submit" style="width: 50%">Kreiraj Projekat</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

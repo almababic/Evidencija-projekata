@@ -1,0 +1,154 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  margin: 0;
+  font-family: cursive;
+  background-image: url('/images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  background-color: #333;
+  padding: 10px;
+  color: white;
+}
+
+.content {
+  overflow-y: auto;
+  flex-grow: 1;
+  padding: 10px;
+  margin-left: 300px;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar a:visited {
+  color: white;
+}
+
+.sidebar a:hover {
+  color: #ddd;
+}
+
+button {
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: cursive;
+  font-weight: bold;
+  padding: 7px 10px;
+  box-shadow: 2px 2px 4px rgba(128, 128, 128, 0.9);
+  transition: transform 0.3s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.button-container {
+  text-align: center;
+}
+
+.poruka {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+#unos-poruke {
+  margin-top: 20px;
+}
+
+#primalac,
+#nova-poruka {
+  padding: 10px;
+  margin-right: 10px;
+}
+
+#poruke-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.conversation-box {
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin-bottom: 3px;
+}
+
+.poruka-box {
+  background-color: #e6e6e6;
+  padding: 5px;
+  margin-bottom: 3px;
+}
+
+.novi-projekat-forma {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(128, 128, 128, 0.9);
+  padding: 20px 20px 20px 20px;
+}
+
+.novi-projekat-forma label {
+  margin-bottom: 10px;
+  width: 100%;
+  font-size: 18px;
+}
+
+.novi-projekat-forma input,
+.novi-projekat-forma textarea,
+.novi-projekat-forma button,
+.novi-projekat-forma select {
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.novi-projekat-forma input,
+.novi-projekat-forma textarea {
+  width: calc(100% - 30px);
+  padding: 7px;
+  box-sizing: border-box;
+}
+
+.project-list {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 50%;
+    height: auto;
+    position: static;
+  }
+
+  .content {
+    margin-left: 0;
+  }
+
+  #poruke-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+}

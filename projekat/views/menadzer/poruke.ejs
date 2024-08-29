@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/menadzer.css' />
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.socket.io/4.1.2/socket.io.js"></script>
+
+  <script>
+    function odjava() {
+      window.location.href = "/";
+    }
+
+    const socket = io();
+
+    // Listen for incoming messages
+    socket.on('newMessage', function (data) {
+      const porukeContainer = document.getElementById('poruke-container');
+      const newMessage = document.createElement('li');
+      newMessage.className = 'poruka';
+      newMessage.innerHTML = `<strong>${data.username_posiljalac}:</strong> ${data.poruka}`;
+      porukeContainer.appendChild(newMessage);
+
+      // Automatsko skrolovanje na dno diva s porukama
+      porukeContainer.scrollTop = porukeContainer.scrollHeight;
+    });
+
+    socket.on('receivedMessage', function (data) {
+      const porukeContainer = document.getElementById('poruke-container');
+      const newMessage = document.createElement('li');
+      newMessage.className = 'poruka';
+      newMessage.innerHTML = `<strong>${data.username_posiljalac}:</strong> ${data.poruka}`;
+      porukeContainer.appendChild(newMessage);
+
+      // Automatsko skrolovanje na dno diva s porukama
+      porukeContainer.scrollTop = porukeContainer.scrollHeight;
+    });
+
+    // Slanje poruke kad se klikne na dugme "Posalji poruku"
+    const sendMessage = () => {
+      const username_primalac = document.getElementById('username_primalac').value;
+      const poruka = document.getElementById('poruka').value;
+
+      socket.emit('sendMessage', { username_primalac, poruka });
+
+      // Automatsko skrolovanje na dno diva sa porukama nakon slanja poruke
+      const porukeContainer = document.getElementById('poruke-container');
+      porukeContainer.scrollTop = porukeContainer.scrollHeight;
+    };
+
+    // Funkcija za automatsko skrolovanje na dno div-a
+    function scrollToBottom() {
+      var container = document.getElementById("poruke-container");
+      container.scrollTop = container.scrollHeight;
+    }
+
+    // Pozivamo funkciju kada se stranica učita
+    window.onload = function () {
+      scrollToBottom();
+    };
+  </script>
+</head>
+<body>
+  <div class="sidebar">
+    <h1 style="margin-left: 5px; text-align: center">Meni</h1>
+    <br>
+    <ul>
+      <li><a href="/menadzer/menadzer-profil/<%= menadzer.id_menadzer %>"> <%= menadzer.username_menadzer %> </a></li>
+      <li><a href="/menadzer/projekti/<%= menadzer.id_menadzer %>">Projekti</a></li>
+      <li><a href="/menadzer/poruke/<%= menadzer.id_menadzer %>">Poruke</a></li>
+      <li><a href="/menadzer/rang-lista/<%= menadzer.id_menadzer %>">Rang lista</a></li>
+      <li><a href="/menadzer/ocjene/<%= menadzer.id_menadzer %>">Ocijenite aplikaciju</a></li>
+    </ul>
+    <br>
+    <div class="button-container">
+      <button onclick="odjava()">Odjava</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="chat-container">
+      <h1>Poruke</h1>
+
+      <!-- Prikazovanje poruka -->
+      <div id="poruke-container">
+        <% let currentConversation = null; %>
+        <% poruke.forEach(poruka => { %>
+          <% const conversationKey = poruka.username_posiljalac + poruka.username_primalac; %>
+          <% if (currentConversation !== conversationKey) { %>
+            <% if (currentConversation !== null) { %>
+              <!-- Razmak između konverzacija -->
+              <br>
+            <% } %>
+            <% currentConversation = conversationKey; %>
+            <div class="conversation-box">
+              <strong>Pošiljalac:</strong> <%= poruka.username_posiljalac %><br>
+              <strong>Primalac:</strong> <%= poruka.username_primalac %><br>
+            </div>
+          <% } %>
+          <div class="poruka-box">
+            <strong>Poruka:</strong> <%= poruka.poruka %><br>
+          </div>
+        <% }); %>
+      </div>
+
+      <br>
+
+      <!-- Add a form for sending new messages -->
+      <form action="/menadzer/poruke/<%= menadzer.id_menadzer %>" method="post" onsubmit="sendMessage()">
+        <label for="username_primalac">Izaberite primaoca:</label>
+        <select name="username_primalac" style="margin-bottom: 5px">
+          <% menadzeri.forEach(m => { %>
+            <% if (m.id_menadzer !== menadzer.id_menadzer) { %>
+              <option value="<%= m.username_menadzer %>"><%= m.username_menadzer %></option>
+            <% } %>
+          <% }); %>
+
+          <% radnici.forEach(r => { %>
+            <option value="<%= r.username_radnik %>"><%= r.username_radnik %></option>
+          <% }); %>
+
+          <% administratori.forEach(a => { %>
+            <option value="<%= a.username_admin %>"><%= a.username_admin %></option>
+          <% }); %>
+        </select>
+        <br>
+        <label for="poruka">Unesite poruku:</label>
+        <textarea name="poruka" rows="5" cols="100" style="vertical-align: top"></textarea>
+        <br>
+        <input type="hidden" name="username_posiljalac" value="<%= menadzer.username_menadzer %>">
+        <button type="submit" style="margin-top: 5px">Posalji poruku</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
